@@ -52,7 +52,7 @@ letterSwap (Key k0) r0 = let (k1, r1) = randomSwap k0 r0 in (Key k1, r1)
 normalise :: String -> String
 normalise [] = []
 normalise (x:xs)
-    | x >= 'a' && x <= 'z' = x : normalise xs
+    | x >= 'a' && x <= 'z' = (toUpper x) : normalise xs
     | x >= 'A' && x <= 'Z' = x : normalise xs
     | otherwise = normalise xs
 
@@ -60,7 +60,7 @@ cipher :: Key -> String -> String
 cipher k = cipher' k . normalise
 
 decipher :: Key -> String -> String
-decipher (Key p) = map toLower . cipher' (Key (negatePerm p))
+decipher (Key p) = map toLower . cipher (Key (negatePerm p))
 
 cipher' :: Key -> String -> String
 cipher' _ [] = []

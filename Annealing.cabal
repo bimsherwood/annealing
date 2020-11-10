@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8804da34a2645b8eee21aafa78a819c28cb24941baafe6e7069633c84e5390c4
+-- hash: 2640bfd06e4ef73ca770e4f1e9a0e6eb5dbb5419a2100eb0040ddb8971b287c6
 
 name:           annealing
 version:        0.1.0.0
@@ -25,6 +25,7 @@ library
   exposed-modules:
       Annealing
       Cipher
+      CipherAnnealing
       English
       Salesman
       SalesmanAnnealing

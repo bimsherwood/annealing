@@ -7,6 +7,7 @@ module English (
     fitness
 ) where
 
+import Data.Char
 import Data.Hashable
 import Data.HashMap hiding (map)
 import System.IO
@@ -15,7 +16,7 @@ type Frequency = Int
 type LogProb = Double
 data Quadgram = Quad Char Char Char Char
     deriving Eq
-data QuadgramTable = QuadTable (Map Quadgram LogProb)
+data QuadgramTable = QuadTable LogProb (Map Quadgram LogProb)
 
 instance Show (Quadgram) where
     show (Quad a b c d) = [a,b,c,d]
@@ -27,7 +28,7 @@ instance Hashable (Quadgram) where
     hashWithSalt s = hashWithSalt s . show
 
 instance Read (Quadgram) where
-    readsPrec _ (a:b:c:d:xs) = [(Quad a b c d,xs)]
+    readsPrec _ (a:b:c:d:xs) = [(Quad (toUpper a) (toUpper b) (toUpper c) (toUpper d),xs)]
     readsPrec _ _ = undefined
 
 parseQuadgramLine :: String -> (Quadgram, Frequency)
@@ -68,10 +69,11 @@ loadQuadgramFreqs :: Handle -> IO QuadgramTable
 loadQuadgramFreqs h = do
     freqList <- parseQuadgramFreqs h
     let total = sum . map snd $ freqList
-    return . QuadTable . fromList . map (\(q, f) -> (q, freqToLogProb total f)) $ freqList
+    let minLogProb = freqToLogProb total 1
+    return . QuadTable minLogProb . fromList . map (\(q, f) -> (q, freqToLogProb total f)) $ freqList
 
 logProb :: QuadgramTable -> Quadgram -> LogProb
-logProb (QuadTable m) k = maybe (log 0) id (Data.HashMap.lookup k m)
+logProb (QuadTable min map) k = maybe min id (Data.HashMap.lookup k map)
 
 fitness :: QuadgramTable -> String -> LogProb
 fitness = fitness' 0 0

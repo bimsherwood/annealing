@@ -1,5 +1,4 @@
 module SalesmanAnnealing (
-    samplePath,
     sampleIterations,
     sampleAnnealing
 ) where
