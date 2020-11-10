@@ -52,13 +52,13 @@ main = do
 
 loop :: (RandomGen r, Solution s) => Step -> Step -> s -> Annealing r s -> IO s
 loop maxStep reportFreq bestSolution state@(Annealing currentStep _ _ _ currentSolution) = do
-        if currentStep `mod` reportFreq == 0
-            then putStrLn (show currentStep ++ ": " ++ show (energy currentSolution))
-            else return ()
-        let nextState = anneal state
-        let nextBestSolution = if energy bestSolution <= energy currentSolution
-            then bestSolution
-            else currentSolution
-        nextBestSolution `seq` if currentStep >= maxStep 
-            then return nextBestSolution
-            else loop maxStep reportFreq nextBestSolution nextState
+    if currentStep `mod` reportFreq == 0
+        then putStrLn (show currentStep ++ ": " ++ show (energy currentSolution))
+        else return ()
+    let nextState = anneal state
+    let nextBestSolution = if energy bestSolution <= energy currentSolution
+        then bestSolution
+        else currentSolution
+    nextBestSolution `seq` if currentStep >= maxStep 
+        then return nextBestSolution
+        else loop maxStep reportFreq nextBestSolution nextState
