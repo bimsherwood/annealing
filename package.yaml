@@ -23,6 +23,7 @@ dependencies:
 - random
 - hashable
 - hashmap
+- sort
 
 library:
   source-dirs: src

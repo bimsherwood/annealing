@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6625c7063c1fcac4dc596e2719fc6a4dc76a25a0a0482738af162771bf235c51
+-- hash: 8804da34a2645b8eee21aafa78a819c28cb24941baafe6e7069633c84e5390c4
 
 name:           annealing
 version:        0.1.0.0
@@ -24,8 +24,10 @@ extra-source-files:
 library
   exposed-modules:
       Annealing
+      Cipher
       English
       Salesman
+      SalesmanAnnealing
   other-modules:
       Paths_annealing
   hs-source-dirs:
@@ -35,6 +37,7 @@ library
     , hashable
     , hashmap
     , random
+    , sort
   default-language: Haskell2010
 
 executable annealing-exe
@@ -50,6 +53,7 @@ executable annealing-exe
     , hashable
     , hashmap
     , random
+    , sort
   default-language: Haskell2010
 
 test-suite annealing-test
@@ -66,4 +70,5 @@ test-suite annealing-test
     , hashable
     , hashmap
     , random
+    , sort
   default-language: Haskell2010
